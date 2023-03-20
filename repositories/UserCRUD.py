@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-from datetime import date
 import models
 import schemas
 

@@ -12,23 +12,24 @@ router = APIRouter(
 
 
 # Getting the information of all users
-@router.get("/", response_model=list[schemas.UserBase])
-def get_all_users(db: Session = Depends(database.get_db)):
+@router.get("/")
+def get_all_users(db: Session = Depends(database.get_db)) -> list[schemas.UserBase]:
     return UserCRUD.get_all_users(db)
 
 
 # Getting the information of specific users using "id"
-@router.get("/{id}", response_model=schemas.UserBase)
-def get_specific_user(user_id, db: Session = Depends(database.get_db)):
+@router.get("/{id}")
+def get_specific_user(user_id, db: Session = Depends(database.get_db)) -> schemas.UserBase:
     db_user = UserCRUD.get_specific_user(user_id, db)
     if db_user is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail="User not found")
+    return db_user
 
 
-# Creating a user with
-@router.post("/", response_model=schemas.CreateUser, status_code=status.HTTP_201_CREATED)
-def create_user(user: schemas.CreateUser, db: Session = Depends(database.get_db)):
+# Creating a user
+@router.post("/", status_code=status.HTTP_201_CREATED)
+def create_user(user: schemas.CreateUser, db: Session = Depends(database.get_db)) -> schemas.CreateUser:
     db_user = UserCRUD.get_user_by_name(user.name, db)
     if db_user:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
