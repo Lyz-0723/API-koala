@@ -33,7 +33,7 @@ def create_user(user: schemas.CreateUser, db: Session = Depends(database.get_db)
     if db_user:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail="Username already registered")
-    if user.gender != 'M' or 'F':
+    if user.gender != 'M' and user.gender != 'F':
         raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE,
                             detail="Gender should be M or F")
     return UserCRUD.create_user(user, db)
