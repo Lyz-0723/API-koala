@@ -10,19 +10,19 @@ router = APIRouter(
 
 
 # Getting the information of all users
-@router.get("/", response_model=schemas.ShowUser)
+@router.get("/", response_model=schemas.UserBase)
 def get_all_users(db: Session = Depends(database.get_db)):
     return UserCRUD.get_all_users(db)
 
 
 # Getting the information of specific users using "id"
-@router.get("/{id}", response_model=schemas.ShowUser)
+@router.get("/{id}", response_model=schemas.UserBase)
 def get_specific_users(user_id, db: Session = Depends(database.get_db)):
     return UserCRUD.get_specific_users(user_id, db)
 
 
 # Creating a user with
-@router.post("/", response_model=schemas.ShowUser, status_code=status.HTTP_201_CREATED)
-def create_users(user: schemas.User, db: Session = Depends(database.get_db)):
+@router.post("/", response_model=schemas.CreateUser, status_code=status.HTTP_201_CREATED)
+def create_users(user: schemas.CreateUser, db: Session = Depends(database.get_db)):
     return UserCRUD.create_user(user, db)
 
