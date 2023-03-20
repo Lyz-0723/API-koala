@@ -13,7 +13,7 @@ server = SSHTunnelForwarder(
 server.start()
 local_port = str(server.local_bind_port)
 
-SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://user:rKelsaoUa@localhost:{local_port}/test_db"
+SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://user:rKelsaoUa@localhost:{local_port}/Koala"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
