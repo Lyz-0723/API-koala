@@ -1,7 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
-from .. import database, schemas
-from ..repositories import UserCRUD
+
+import database
+import schemas
+from repositories import UserCRUD
 
 router = APIRouter(
     prefix="/user",
@@ -10,7 +12,7 @@ router = APIRouter(
 
 
 # Getting the information of all users
-@router.get("/", response_model=schemas.UserBase)
+@router.get("/", response_model=list[schemas.UserBase])
 def get_all_users(db: Session = Depends(database.get_db)):
     return UserCRUD.get_all_users(db)
 
