@@ -16,7 +16,7 @@ User = sqlalchemy.Table(
 )
 
 Article = sqlalchemy.Table(
-    "Article",
+    "Articles",
     metadata,
     Column("id", sqlalchemy.INTEGER, primary_key=True, index=True),
     Column("title", sqlalchemy.VARCHAR(50), nullable=False),

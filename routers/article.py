@@ -1,10 +1,6 @@
 from typing import Annotated
-
 from fastapi import APIRouter, Depends, status, HTTPException
-from sqlalchemy.orm import Session
 
-import database
-import models
 import schemas
 from authentication.JWTtoken import get_current_user
 from repositories import ArticleCRUD
@@ -16,13 +12,13 @@ router = APIRouter(
 
 
 # Getting the information of all articles
-@router.get("/", response_model=models.Article)
+@router.get("/", response_model=schemas.Article)
 def get_all_articles(current_user: Annotated[schemas.User, Depends(get_current_user)]):
     return ArticleCRUD.get_all_articles()
 
 
 # Creating an article
-@router.post("/", response_model=models.Article, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=schemas.Article, status_code=status.HTTP_201_CREATED)
 def create_article(article: schemas.ArticleBase,
                    current_user: Annotated[schemas.User, Depends(get_current_user)]):
     return ArticleCRUD.create_article(article, current_user)
