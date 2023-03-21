@@ -1,8 +1,11 @@
+from typing import Annotated
+
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 
 import database
 import schemas
+from authentication.JWTtoken import get_current_user
 from repositories import UserCRUD
 
 router = APIRouter(
@@ -13,13 +16,16 @@ router = APIRouter(
 
 # Getting the information of all users
 @router.get("/")
-def get_all_users(db: Session = Depends(database.get_db)) -> list[schemas.UserBase]:
+def get_all_users(current_user: Annotated[schemas.User, Depends(get_current_user)],
+                  db: Session = Depends(database.get_db)) -> list[schemas.UserBase]:
     return UserCRUD.get_all_users(db)
 
 
 # Getting the information of specific users using "id"
 @router.get("/{id}")
-def get_specific_user(user_id, db: Session = Depends(database.get_db)) -> schemas.UserBase:
+def get_specific_user(user_id,
+                      current_user: Annotated[schemas.User, Depends(get_current_user)],
+                      db: Session = Depends(database.get_db)) -> schemas.UserBase:
     db_user = UserCRUD.get_specific_user(user_id, db)
     if db_user is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,

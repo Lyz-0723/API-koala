@@ -9,11 +9,11 @@ def get_all_articles(db: Session):
     return db.query(models.Article).all()
 
 
-def create_article(article: schemas.ArticleBase, db: Session):
+def create_article(article: schemas.ArticleBase, creator: schemas.User, db: Session):
     new_article = models.Article(title=article.title,
                                  body=article.body,
                                  created_time=datetime.datetime.now(),
-                                 creator_id=51)
+                                 creator_id=creator.id)
     db.add(new_article)
     db.commit()
     db.refresh(new_article)
