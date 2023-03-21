@@ -1,5 +1,6 @@
-from sqlalchemy import Column
+from sqlalchemy import Column, ForeignKey
 from sqlalchemy.dialects.mysql import INTEGER, VARCHAR, CHAR, DATE
+from sqlalchemy.orm import relationship
 from database import Base
 
 
@@ -10,3 +11,16 @@ class User(Base):
     gender = Column(VARCHAR(1), nullable=False)
     birth_date = Column(DATE, nullable=False)
     password = Column(CHAR(60), nullable=False)
+
+    articles = relationship("Article", back_populates="creator")
+
+
+class Article(Base):
+    __tablename__ = "Articles"
+    id = Column(INTEGER, primary_key=True, index=True)
+    title = Column(VARCHAR(50), nullable=False)
+    body = Column(VARCHAR(250), nullable=False)
+    create_date = Column(DATE, nullable=False)
+    creator_id = Column(INTEGER, ForeignKey("Users.id"))
+
+    creator = relationship("User", back_populates="articles")
