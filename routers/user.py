@@ -44,3 +44,9 @@ def create_user(user: schemas.CreateUser, db: Session = Depends(database.get_db)
         raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE,
                             detail="Gender should be M or F")
     return UserCRUD.create_user(user, db)
+
+
+@router.delete("/{id}", status_code=status.HTTP_202_ACCEPTED)
+def delete_user(current_user: Annotated[schemas.User, Depends(get_current_user)],
+                db: Session = Depends(database.get_db)):
+    return UserCRUD.delete_user(current_user.id, db)
