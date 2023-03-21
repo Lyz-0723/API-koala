@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 import models
 import schemas
+from authentication import hashing
 
 
 def get_all_users(db: Session):
@@ -19,7 +20,7 @@ def create_user(user: schemas.CreateUser, db: Session):
     new_user = models.User(name=user.name,
                            gender=user.gender,
                            birth_date=user.birth_date,
-                           password=user.password)
+                           password=hashing.get_password_hash(user.password))
     db.add(new_user)
     db.commit()
     db.refresh(new_user)

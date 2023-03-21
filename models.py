@@ -1,5 +1,5 @@
 from sqlalchemy import Column
-from sqlalchemy.dialects.mysql import INTEGER, VARCHAR, DATE
+from sqlalchemy.dialects.mysql import INTEGER, VARCHAR, CHAR, DATE
 from database import Base
 
 
@@ -9,4 +9,4 @@ class User(Base):
     name = Column(VARCHAR(50), nullable=False)
     gender = Column(VARCHAR(1), nullable=False)
     birth_date = Column(DATE, nullable=False)
-    password = Column(VARCHAR(50), nullable=False)
+    password = Column(CHAR(60), nullable=False)
