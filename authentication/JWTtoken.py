@@ -2,8 +2,8 @@
 from datetime import timedelta, datetime
 from typing import Annotated
 
-import database
-import models
+from database import database
+from repositories import UserCRUD
 from authentication import hashing
 from authentication import oauth2
 
@@ -30,8 +30,8 @@ def expire_days():
     return ACCESS_TOKEN_EXPIRE_DAYS
 
 
-def authenticate_user(db: Session, username: str, password: str):
-    user = db.query(models.User).filter_by(name=username).first()
+def authenticate_user(username: str, password: str):
+    user = UserCRUD.get_specific_user_by_name(username)
     if not user:
         return False
     if not hashing.verify_password(password, user.password):
@@ -50,8 +50,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 
-def get_current_user(token: Annotated[str, Depends(oauth2.oauth2_scheme)],
-                     db: Session = Depends(database.get_db)):
+def get_current_user(token: Annotated[str, Depends(oauth2.oauth2_scheme)]):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -65,7 +64,7 @@ def get_current_user(token: Annotated[str, Depends(oauth2.oauth2_scheme)],
         token_data = TokenData(username=username)
     except JWTError:
         raise credentials_exception
-    user = db.query(models.User).filter_by(name=token_data.username).first()
+    user = UserCRUD.get_specific_user_by_name(token_data.username)
     if user is None:
         raise credentials_exception
     return user

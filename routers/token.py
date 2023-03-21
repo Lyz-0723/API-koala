@@ -2,12 +2,10 @@ from datetime import timedelta
 from typing import Annotated
 
 from authentication import JWTtoken
-import database
 
 from fastapi import APIRouter, HTTPException, status
 from fastapi import Depends
 from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy.orm import Session
 
 
 router = APIRouter(
@@ -16,8 +14,8 @@ router = APIRouter(
 
 
 @router.post("/token")
-def token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session = Depends(database.get_db)):
-    user = JWTtoken.authenticate_user(db, form_data.username, form_data.password)
+def token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
+    user = JWTtoken.authenticate_user(form_data.username, form_data.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
