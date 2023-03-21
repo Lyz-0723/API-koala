@@ -24,4 +24,5 @@ def create_user(user: schemas.CreateUser, db: Session):
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
+    print(new_user)
     return new_user

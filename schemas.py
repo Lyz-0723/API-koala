@@ -6,6 +6,9 @@ class ArticleBase(BaseModel):
     title: str
     body: str
 
+    class Config:
+        orm_mode = True
+
 
 class CreateArticle(ArticleBase):
     created_time: datetime.datetime | None = None
@@ -35,6 +38,3 @@ class CreateUser(UserBase):
 class User(UserBase):
     id: int
     articles: list[Article] = []
-
-    class Config:
-        orm_mode = True
