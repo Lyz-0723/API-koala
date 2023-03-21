@@ -5,11 +5,11 @@ from pydantic import BaseModel
 class ArticleBase(BaseModel):
     title: str
     body: str
-    create_date: str
 
 
 class CreateArticle(ArticleBase):
-    pass
+    created_time: datetime.datetime | None = None
+    creator_id: int
 
 
 class Article(ArticleBase):
@@ -34,7 +34,7 @@ class CreateUser(UserBase):
 
 class User(UserBase):
     id: int
-    articles = list[Article] = []
+    articles: list[Article] = []
 
     class Config:
         orm_mode = True
