@@ -2,14 +2,12 @@
 from datetime import timedelta, datetime
 from typing import Annotated
 
-from database import database
 from repositories import UserCRUD
 from authentication import hashing
 from authentication import oauth2
 
 from pydantic import BaseModel
 from jose import jwt, JWTError
-from sqlalchemy.orm import Session
 from fastapi import Depends, status, HTTPException
 
 ACCESS_TOKEN_EXPIRE_DAYS = 7
