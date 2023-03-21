@@ -1,34 +1,34 @@
-from sqlalchemy.orm import Session
-import models
+from models import User
 import schemas
+from database import database
 from authentication import hashing
 
 
-def get_all_users(db: Session):
-    return db.query(models.User).all()
+def get_all_users():
+    query = User.select()
+    return await database.fetch_all(query)
 
 
-def get_specific_user(user_id: int, db: Session):
-    return db.query(models.User).filter_by(id=user_id).first()
+def get_specific_user(user_id: int):
+    query = User.select().where(User.c.id == user_id)
+    return await database.fetch_one(query)
 
 
-def get_user_by_name(name: str, db: Session):
-    return db.query(models.User).filter_by(name=name).first()
+def get_specific_user_by_name(user_name: str):
+    query = User.select().where(User.c.name == user_name)
+    return await database.fetch_one(query)
 
 
-def create_user(user: schemas.CreateUser, db: Session):
-    new_user = models.User(name=user.name,
-                           gender=user.gender,
-                           birth_date=user.birth_date,
-                           password=hashing.get_password_hash(user.password))
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
-    print(new_user)
-    return new_user
+def create_user(user: schemas.CreateUser):
+    query = User.insert().values(name=user.name,
+                                 gender=user.gender,
+                                 birth_date=user.birth_date,
+                                 password=hashing.get_password_hash(user.password))
+    await database.execute(query)
+    return {**user.dict()}
 
 
-def delete_user(user_id: int, db: Session):
-    db.query(models.User).filter_by(id=user_id).delete(synchronize_session=False)
-    db.commit()
+def delete_user(user_id: int):
+    query = User.delete().where(User.c.id == user_id)
+    await database.execute(query)
     return {"User deletion done"}
