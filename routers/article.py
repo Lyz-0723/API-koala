@@ -13,16 +13,14 @@ router = APIRouter(
 
 # Getting the information of all articles
 @router.get("/")
-async def get_all_articles(current_user: Annotated[schemas.User, Depends(get_current_user)])\
-                           -> list[schemas.Article]:
+async def get_all_articles(current_user: Annotated[schemas.User, Depends(get_current_user)]) -> list[schemas.Article]:
     return await ArticleCRUD.get_all_articles()
 
 
 # Creating an article
 @router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_article(article: schemas.ArticleBase,
-                         current_user: Annotated[schemas.User, Depends(get_current_user)])\
-                         -> schemas.CreateArticle:
+                         current_user: Annotated[schemas.User, Depends(get_current_user)]) -> schemas.CreateArticle:
     return await ArticleCRUD.create_article(article, current_user)
 
 

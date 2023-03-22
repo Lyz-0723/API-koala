@@ -7,7 +7,6 @@ from fastapi import APIRouter, HTTPException, status
 from fastapi import Depends
 from fastapi.security import OAuth2PasswordRequestForm
 
-
 router = APIRouter(
     tags=["Authentication"]
 )
