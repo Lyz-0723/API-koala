@@ -18,8 +18,7 @@ async def get_specific_user(user_id: int):
     result = {"name": user.name,
               "gender": user.gender,
               "birth_date": user.birth_date,
-              "id": user.id,
-              "articles": articles}
+              "id": user.id}
     return result
 
 

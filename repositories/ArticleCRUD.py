@@ -24,7 +24,7 @@ async def create_article(article: schemas.ArticleBase, creator: schemas.User):
                                     creator_id=creator.id)
     await database.execute(query)
 
-    result = {"title": article.title, "body": article.body, "created_time": now, "creator_id": creator.id}
+    result = {**article.dict(), "created_time": now, "creator_id": creator.id}
     return result
 
 
