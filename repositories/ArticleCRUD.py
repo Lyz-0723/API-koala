@@ -7,7 +7,8 @@ import schemas
 
 async def get_all_articles():
     query = Article.select()
-    return await database.fetch_all(query)
+    articles = await database.fetch_all(query)
+    return articles
 
 
 async def get_specific_article(article_id: int):
@@ -16,15 +17,18 @@ async def get_specific_article(article_id: int):
 
 
 async def create_article(article: schemas.ArticleBase, creator: schemas.User):
+    now = datetime.datetime.now()
     query = Article.insert().values(title=article.title,
                                     body=article.body,
-                                    created_time=datetime.datetime.now(),
+                                    created_time=now,
                                     creator_id=creator.id)
     await database.execute(query)
-    return article
+
+    result = {"title": article.title, "body": article.body, "created_time": now, "creator_id": creator.id}
+    return result
 
 
 async def delete_article(article_id: int):
-    query = Article.select().where(Article.c.id == article_id)
+    query = Article.delete().where(Article.c.id == article_id)
     await database.execute(query)
     return {"Article deletion done"}

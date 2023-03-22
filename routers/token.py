@@ -14,8 +14,8 @@ router = APIRouter(
 
 
 @router.post("/token")
-def token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
-    user = JWTtoken.authenticate_user(form_data.username, form_data.password)
+async def token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
+    user = await JWTtoken.authenticate_user(form_data.username, form_data.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

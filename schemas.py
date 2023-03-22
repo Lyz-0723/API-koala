@@ -18,9 +18,6 @@ class CreateArticle(ArticleBase):
 class Article(ArticleBase):
     id: int
 
-    class Config:
-        orm_mode = True
-
 
 class UserBase(BaseModel):
     name: str

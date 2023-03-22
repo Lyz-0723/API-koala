@@ -28,8 +28,8 @@ def expire_days():
     return ACCESS_TOKEN_EXPIRE_DAYS
 
 
-def authenticate_user(username: str, password: str):
-    user = UserCRUD.get_specific_user_by_name(username)
+async def authenticate_user(username: str, password: str):
+    user = await UserCRUD.get_specific_user_by_name(username)
     if not user:
         return False
     if not hashing.verify_password(password, user.password):
@@ -48,7 +48,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 
-def get_current_user(token: Annotated[str, Depends(oauth2.oauth2_scheme)]):
+async def get_current_user(token: Annotated[str, Depends(oauth2.oauth2_scheme)]):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -62,7 +62,7 @@ def get_current_user(token: Annotated[str, Depends(oauth2.oauth2_scheme)]):
         token_data = TokenData(username=username)
     except JWTError:
         raise credentials_exception
-    user = UserCRUD.get_specific_user_by_name(token_data.username)
+    user = await UserCRUD.get_specific_user_by_name(token_data.username)
     if user is None:
         raise credentials_exception
     return user

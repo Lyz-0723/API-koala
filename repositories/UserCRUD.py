@@ -1,4 +1,4 @@
-from models import User
+from models import User, Article
 import schemas
 from database import database
 from authentication import hashing
@@ -11,12 +11,22 @@ async def get_all_users():
 
 async def get_specific_user(user_id: int):
     query = User.select().where(User.c.id == user_id)
-    return await database.fetch_one(query)
+    user = await database.fetch_one(query)
+    query_articles = Article.select().where(Article.c.creator_id == user_id)
+    articles = await database.fetch_all(query_articles)
+
+    result = {"name": user.name,
+              "gender": user.gender,
+              "birth_date": user.birth_date,
+              "id": user.id,
+              "articles": articles}
+    return result
 
 
 async def get_specific_user_by_name(user_name: str):
     query = User.select().where(User.c.name == user_name)
-    return await database.fetch_one(query)
+    user = await database.fetch_one(query)
+    return user
 
 
 async def create_user(user: schemas.CreateUser):
