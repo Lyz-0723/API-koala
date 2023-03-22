@@ -1,9 +1,7 @@
 import sqlalchemy
 from sqlalchemy import Column, ForeignKey
-from sqlalchemy.dialects.mysql import INTEGER, VARCHAR, CHAR, DATE, DATETIME
-from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.mysql import INTEGER
 from database import metadata
-
 
 User = sqlalchemy.Table(
     "Users",

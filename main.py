@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from routers import user, token, article
-from database import database, metadata, engine
-
+from database import database, metadata, engine, server
 
 app = FastAPI()
 
@@ -20,3 +19,4 @@ async def startup():
 @app.on_event("shutdown")
 async def shutdown():
     await database.disconnect()
+    server.stop()
