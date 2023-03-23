@@ -1,0 +1,25 @@
+### Getting all articles
+GET http://localhost:8000/article
+Authorization: Bearer {{auth_token}}
+
+
+### Creating an article
+POST http://localhost:8000/article/
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "title": "TestingTitle",
+  "body": "TestingBody"
+}
+
+
+### Deleting a specific article
+DELETE http://localhost:8000/article/
+Content-Type: application/json
+Accept: */*
+Authorization: Bearer {{auth_token}}
+
+{
+  "article_id": 5
+}
