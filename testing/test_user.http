@@ -1,30 +1,26 @@
 ### Get all users.
-GET http://127.0.0.1:8000/user
+GET http://localhost:8000/user
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 
 ### Get specific user.
-GET http://127.0.0.1:8000/user/id?user_id={{id}}
+GET http://localhost:8000/user/id?user_id={{id}}
 Accept: application/json
 Authorization: Bearer {{auth_token}}
-
 
 ### Create user.
-POST http://127.0.0.1:8000/user/
+POST http://localhost:8000/user/
 Accept: application/json
-Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
 {
-  "name": "test",
+  "name": "{{username}}",
   "gender": "M",
-  "birth_date": "2023-01-01",
-  "password": "test"
+  "birth_date": "2000-01-01",
+  "password": "{{password}}"
 }
 
 ### Delete current user.
-DELETE http://127.0.0.1:8000/user/{{id}}
+DELETE http://localhost:8000/user/
 Accept: application/json
 Authorization: Bearer {{auth_token}}
-
-

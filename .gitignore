@@ -1,5 +1,6 @@
 .DS_Store
 .idea
+testing/http-client.env.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

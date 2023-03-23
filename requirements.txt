@@ -11,3 +11,4 @@ databases
 pytest
 httpx
 asyncmy
+greenlet
