@@ -12,6 +12,7 @@ app.include_router(article.router)
 @app.on_event("startup")
 async def startup():
     async with engine.begin() as conn:
+        await conn.run_sync(metadata.drop_all)
         await conn.run_sync(metadata.create_all)
     await database.connect()
 
