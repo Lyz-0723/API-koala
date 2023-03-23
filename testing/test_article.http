@@ -15,11 +15,6 @@ Authorization: Bearer {{auth_token}}
 
 
 ### Deleting a specific article
-DELETE http://localhost:8000/article/
+DELETE http://localhost:8000/article/id?article_id={{id}}
 Content-Type: application/json
-Accept: */*
 Authorization: Bearer {{auth_token}}
-
-{
-  "article_id": 5
-}
