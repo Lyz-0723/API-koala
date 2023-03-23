@@ -42,6 +42,6 @@ async def create_user(user: schemas.CreateUser) -> schemas.CreateUser:
     return await UserCRUD.create_user(user)
 
 
-@router.delete("/{id}", status_code=status.HTTP_202_ACCEPTED)
+@router.delete("/", status_code=status.HTTP_202_ACCEPTED)
 async def delete_user(current_user: Annotated[schemas.User, Depends(get_current_user)]):
     return await UserCRUD.delete_user(current_user.id)

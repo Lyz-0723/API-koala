@@ -38,6 +38,16 @@ async def create_user(user: schemas.CreateUser):
 
 
 async def delete_user(user_id: int):
-    query = User.delete().where(User.c.id == user_id)
-    await database.execute(query)
+    trans = database.transaction()
+    articles = Article.delete().where(Article.c.creator_id == user_id)
+    user = User.delete().where(User.c.id == user_id)
+    await trans.start()
+
+    try:
+        await database.execute(articles)
+        await database.execute(user)
+        await trans.commit()
+    except:
+        await trans.rollback()
+
     return {"User deletion done"}
