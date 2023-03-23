@@ -8,6 +8,6 @@ passlib[bcrypt]
 python-jose[cryptography]
 python-multipart
 databases
-aiomysql
 pytest
 httpx
+asyncmy
