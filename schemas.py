@@ -16,7 +16,7 @@ class CreateArticle(ArticleBase):
 
 
 class Article(ArticleBase):
-    id: int
+    article_id: int
 
 
 class UserBase(BaseModel):
@@ -33,5 +33,5 @@ class CreateUser(UserBase):
 
 
 class User(UserBase):
-    id: int
+    user_id: int
     articles: list[Article] = []

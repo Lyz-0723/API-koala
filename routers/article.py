@@ -31,7 +31,7 @@ async def delete_article(article_id: int,
     if not await ArticleCRUD.get_specific_article(article_id):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Article not found")
 
-    if not current_user.id == (await ArticleCRUD.get_specific_article(article_id)).creator_id:
+    if not current_user.user_id == (await ArticleCRUD.get_specific_article(article_id)).creator_id:
         raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="Article not belongs to the user")
 
     return await ArticleCRUD.delete_article(article_id)

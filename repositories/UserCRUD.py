@@ -10,7 +10,7 @@ async def get_all_users():
 
 
 async def get_specific_user(user_id: int):
-    query = User.select().where(User.c.id == user_id)
+    query = User.select().where(User.c.user_id == user_id)
     user = await database.fetch_one(query)
     query_articles = Article.select().where(Article.c.creator_id == user_id)
     articles = await database.fetch_all(query_articles)
@@ -18,7 +18,7 @@ async def get_specific_user(user_id: int):
     result = {"name": user.name,
               "gender": user.gender,
               "birth_date": user.birth_date,
-              "id": user.id}
+              "user_id": user.user_id}
     return result
 
 
@@ -40,7 +40,7 @@ async def create_user(user: schemas.CreateUser):
 async def delete_user(user_id: int):
     trans = database.transaction()
     articles = Article.delete().where(Article.c.creator_id == user_id)
-    user = User.delete().where(User.c.id == user_id)
+    user = User.delete().where(User.c.user_id == user_id)
     await trans.start()
 
     try:
