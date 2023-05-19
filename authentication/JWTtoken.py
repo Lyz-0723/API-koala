@@ -1,6 +1,6 @@
 # Creating JWT token and verifying users
 from datetime import timedelta, datetime
-from typing import Annotated
+from typing import Annotated, Union
 
 from repositories import UserCRUD
 from authentication import hashing
@@ -21,7 +21,7 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    username: str | None = None
+    username: Union[str, None] = None
 
 
 def expire_days():
@@ -37,7 +37,7 @@ async def authenticate_user(username: str, password: str):
     return user
 
 
-def create_access_token(data: dict, expires_delta: timedelta | None = None):
+def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None):
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta

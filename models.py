@@ -20,5 +20,5 @@ Article = sqlalchemy.Table(
     Column("title", sqlalchemy.VARCHAR(50), nullable=False),
     Column("body", sqlalchemy.VARCHAR(600), nullable=False),
     Column("created_time", sqlalchemy.DATETIME, nullable=False),
-    Column("creator_id", INTEGER, ForeignKey("Users.user_id"))
+    Column("creator_id", INTEGER, ForeignKey("Users.user_id"), nullable=False)
 )

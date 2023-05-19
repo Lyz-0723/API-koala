@@ -1,5 +1,5 @@
 ### Login and return token
-POST http://localhost:8000/token
+POST https://qu76blzmm7.execute-api.us-east-1.amazonaws.com/dev/token
 Accept: application/json
 Content-Type: application/x-www-form-urlencoded
 

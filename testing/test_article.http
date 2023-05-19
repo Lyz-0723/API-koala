@@ -1,9 +1,9 @@
 ### Getting all articles
-GET http://localhost:8000/article
+GET https://qu76blzmm7.execute-api.us-east-1.amazonaws.com/dev/article/
 Authorization: Bearer {{auth_token}}
 
 ### Creating an article
-POST http://localhost:8000/article/
+POST https://qu76blzmm7.execute-api.us-east-1.amazonaws.com/dev/article/
 Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 

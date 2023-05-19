@@ -1,15 +1,15 @@
 ### Get all users.
-GET http://localhost:8000/user
+GET https://qu76blzmm7.execute-api.us-east-1.amazonaws.com/dev/user/
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 
 ### Get specific user.
-GET http://localhost:8000/user/id?user_id={{id}}
+GET https://mg2wsml805.execute-api.us-east-1.amazonaws.com/dev/user/id?user_id={{id}}
 Accept: application/json
 Authorization: Bearer {{auth_token}}
 
 ### Create user.
-POST http://localhost:8000/user/
+POST  https://qu76blzmm7.execute-api.us-east-1.amazonaws.com/dev/user/
 Accept: application/json
 Content-Type: application/json
 
@@ -21,6 +21,6 @@ Content-Type: application/json
 }
 
 ### Delete current user.
-DELETE http://localhost:8000/user/
+DELETE https://qu76blzmm7.execute-api.us-east-1.amazonaws.com/dev/user/
 Accept: application/json
 Authorization: Bearer {{auth_token}}

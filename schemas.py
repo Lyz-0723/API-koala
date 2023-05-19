@@ -1,5 +1,6 @@
 import datetime
 from pydantic import BaseModel
+from typing import Union
 
 
 class ArticleBase(BaseModel):
@@ -11,7 +12,7 @@ class ArticleBase(BaseModel):
 
 
 class CreateArticle(ArticleBase):
-    created_time: datetime.datetime | None = None
+    created_time: Union[datetime.datetime, None] = None
     creator_id: int
 
 
@@ -22,7 +23,7 @@ class Article(ArticleBase):
 class UserBase(BaseModel):
     name: str
     gender: str
-    birth_date: datetime.date | None = None
+    birth_date: Union[datetime.date, None] = None
 
     class Config:
         orm_mode = True
