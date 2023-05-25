@@ -29,7 +29,7 @@ def expire_days():
 
 
 async def authenticate_user(username: str, password: str):
-    user = await UserCRUD.get_specific_user_by_name(username)
+    user = await UserCRUD.check_user_existence(username)
     if not user:
         return False
     if not hashing.verify_password(password, user.password):
@@ -62,7 +62,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2.oauth2_scheme)])
         token_data = TokenData(username=username)
     except JWTError:
         raise credentials_exception
-    user = await UserCRUD.get_specific_user_by_name(token_data.username)
+    user = await UserCRUD.check_user_existence(token_data.username)
     if user is None:
         raise credentials_exception
     return user

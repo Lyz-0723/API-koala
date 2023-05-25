@@ -18,13 +18,31 @@ async def get_specific_user(user_id: int):
     result = {"name": user.name,
               "gender": user.gender,
               "birth_date": user.birth_date,
-              "user_id": user.user_id}
+              "user_id": user.user_id,
+              "articles": articles}
     return result
 
 
 async def get_specific_user_by_name(user_name: str):
     query = User.select().where(User.c.name == user_name)
     user = await database.fetch_one(query)
+    query_articles = Article.select().where(Article.c.creator_id == user.user_id)
+    articles = await database.fetch_all(query_articles)
+
+    result = {"name": user.name,
+              "gender": user.gender,
+              "birth_date": user.birth_date,
+              "user_id": user.user_id,
+              "articles": articles}
+    print(user)
+
+    return result
+
+
+async def check_user_existence(user_name: str):
+    query = User.select().where(User.c.name == user_name)
+    user = await database.fetch_one(query)
+
     return user
 
 

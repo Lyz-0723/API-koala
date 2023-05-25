@@ -29,10 +29,22 @@ async def get_specific_user(user_id,
     return db_user
 
 
+# Getting the information of specific users using "name"
+@router.get("/name/{name}")
+async def get_specific_user_by_name(user_name: str,
+                                    current_user: Annotated[schemas.User, Depends(get_current_user)]) -> schemas.User:
+    db_user = await UserCRUD.get_specific_user_by_name(user_name)
+
+    if db_user is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail="User not found")
+    return db_user
+
+
 # Creating a user
 @router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_user(user: schemas.CreateUser) -> schemas.CreateUser:
-    db_user = await UserCRUD.get_specific_user_by_name(user.name)
+    db_user = await UserCRUD.check_user_existence(user.name)
     if db_user:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail="Username already registered")
